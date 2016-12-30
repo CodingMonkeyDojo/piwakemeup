@@ -37,8 +37,8 @@ function toggle(color) {
     led.status = false;
     return {"colorOn": led.status};
   } else {
-    ledGpio.pwmWrite(200);
-    console.log('Color:' + color + ' pwm: 200');
+    ledGpio.pwmWrite(255);
+    console.log('Color:' + color + ' pwm: 255');
     led.status = true;
     return {"colorOn": led.status};
   }
