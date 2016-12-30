@@ -1,19 +1,21 @@
 import React from 'react'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import ColorToggleButton from './components/ColorToggle.jsx'
 
-export default class Application extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    return (
+let Application  = props => {
+  return (
+    <MuiThemeProvider>
       <div>
         <h1>Wake up before you go go!!</h1>
         <div>
-          <ColorToggleButton/>
+          <ColorToggleButton colorLabel={'Red'}/>
+        </div>
+        <div>
+          <ColorToggleButton colorLabel={'Blue'}/>
         </div>
       </div>
-    )
-  }
+    </MuiThemeProvider>
+  )
 }
+
+export default Application

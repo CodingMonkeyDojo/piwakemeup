@@ -5,14 +5,17 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack -d",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mockpi": "node mockpi.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "es6-promise": "^4.0.5",
     "express": "^4.14.0",
-    "isomorphic-fetch": "^2.2.1"
+    "material-ui": "^0.16.6",
+    "react-tap-event-plugin": "^2.0.1",
+    "whatwg-fetch": "^2.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
