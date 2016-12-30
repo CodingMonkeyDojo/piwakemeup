@@ -6,7 +6,7 @@ export default class ColorToggle extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      colorOn: false
+      colorOn: props.initialLedStatus
     }
     this.toggleLight = this.toggleLight.bind(this)
   }
@@ -39,6 +39,7 @@ export default class ColorToggle extends React.Component {
     return (
       <div style={{display: 'inline-block'}}>
         <Toggle
+          defaultToggled={this.props.initialLedStatus}
           label={this.props.colorLabel}
           thumbStyle={styles.thumbOff}
           trackStyle={styles.trackOff}
@@ -88,5 +89,6 @@ export default class ColorToggle extends React.Component {
 }
 
 ColorToggle.propTypes = {
-  colorLabel: React.PropTypes.string.isRequired
+  colorLabel: React.PropTypes.string.isRequired,
+  initialLedStatus: React.PropTypes.bool.isRequired
 }

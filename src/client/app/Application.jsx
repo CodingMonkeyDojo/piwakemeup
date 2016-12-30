@@ -1,24 +1,21 @@
 import React from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import ColorToggleButton from './components/ColorToggle.jsx'
+import 'whatwg-fetch'
 
-let Application  = props => {
-  return (
-    <MuiThemeProvider>
-      <div>
-        <h1>Test Driven Development!!</h1>
+import ColorToggleGroup from './components/ColorToggleGroup.jsx'
+
+export default class Application extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <MuiThemeProvider>
         <div>
-          <ColorToggleButton colorLabel={'Red'}/>
+          <h1>Test Driven Development!!</h1>
+          <ColorToggleGroup/>
         </div>
-        <div>
-          <ColorToggleButton colorLabel={'Green'}/>
-        </div>
-        <div>
-          <ColorToggleButton colorLabel={'Blue'}/>
-        </div>
-      </div>
-    </MuiThemeProvider>
-  )
+      </MuiThemeProvider>
+    )
+  }
 }
-
-export default Application

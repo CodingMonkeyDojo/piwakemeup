@@ -16,40 +16,54 @@ app.use(function(req, res, next) {
 var ledsOnOff = {
   "red": {
     "status": false,
-    "pin": 17
+    "pin": 17,
+    "gpio": createGpio(17)
   },
   "green": {
     "status": false,
-    "pin": 18
+    "pin": 18,
+    "gpio": createGpio(18)
   },
   "blue": {
     "status": false,
-    "pin": 27
+    "pin": 27,
+    "gpio": createGpio(27)
   }
 };
 function toggle(color) {
   // var currentDutyCycle = red.getPwmDutyCycle();
+  console.log('toggling color', color);
+  console.log('ledsOnOff', ledsOnOff);
   let led = ledsOnOff[color.toLowerCase()];
-  let ledGpio = new Gpio(led.pin, {mode: Gpio.OUTPUT});
-  if (led.status) {
-    ledGpio.pwmWrite(0);
-    console.log('Color:' + color + ' pwm: 0');
-    led.status = false;
-    return {"colorOn": led.status};
-  } else {
-    ledGpio.pwmWrite(255);
-    console.log('Color:' + color + ' pwm: 255');
-    led.status = true;
-    return {"colorOn": led.status};
-  }
+  console.log('led.status', led.status);
+  console.log('led.pin', led.pin);
+  let wasOn = led.gpio.getPwmDutyCycle() == 0;
+
+  led.gpio.pwmWrite(wasOn ? 255 : 0);
+  ledsOnOff[color.toLowerCase()].status = !wasOn;
+
+  return {"colorOn": ledsOnOff[color.toLowerCase()].status};
 }
 
 app.post('/toggle', function(req, res) {
   toggle(req.body.color)
-  ledsOnOff[req.body.color] = !ledsOnOff[req.body.color];
-  res.send({"colorOn": ledsOnOff[req.body.color]});
+  console.log('Toggling Color', req.body.color);
+  let led = ledsOnOff[req.body.color];
+  led.status = !led.status;
+  res.send({"colorOn": led.status});
 });
 
+app.get('/statuses', function(req, res) {
+  var statuses = [];
+  for(var color in ledsOnOff) {
+    statuses.push({
+      "color": color,
+      "status": (ledsOnOff[color].gpio.getPwmDutyCycle() == 0)
+    });
+    console.log('/statuses', statuses);
+  }
+  res.send(statuses);
+});
 //
 // app.get('/toggleRed', function(req, res) {
 //   var PIN_RED = 17;
@@ -79,4 +93,17 @@ app.get('*', function response(req, res) {
 
 var server = app.listen(8080, function () {
   console.log('Node Express Webserver Started');
+  initializeLeds();
 });
+
+function initializeLeds() {
+  for(var color in ledsOnOff) {
+    console.log('turnning off led', color);
+    ledsOnOff[color].gpio.pwmWrite(255);
+  }
+}
+
+function createGpio(pin) {
+  console.log('creating gpio for pin', pin);
+  return new Gpio(pin, {mode: Gpio.OUTPUT});
+}
