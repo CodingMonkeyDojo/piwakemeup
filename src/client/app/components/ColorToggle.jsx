@@ -51,10 +51,18 @@ export default class ColorToggle extends React.Component {
   }
 
   toggleLight() {
-    let endpoint = `http://raspberrypi.local:8080/toggle${this.props.colorLabel}`
-    // let endpoint = `http://localhost:8080/toggle${this.props.colorLabel}`
+    let endpoint = 'http://raspberrypi.local:8080/toggle'
+    // let endpoint = `http://localhost:8080/toggle`
 
-    fetch(endpoint)
+    fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        color: this.props.colorLabel
+      })
+    })
       .then((response) => {
         if (response.ok) {
           return response.json()

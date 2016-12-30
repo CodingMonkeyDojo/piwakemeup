@@ -6,9 +6,12 @@ let Application  = props => {
   return (
     <MuiThemeProvider>
       <div>
-        <h1>Wake up before you go go!!</h1>
+        <h1>Test Driven Development!!</h1>
         <div>
           <ColorToggleButton colorLabel={'Red'}/>
+        </div>
+        <div>
+          <ColorToggleButton colorLabel={'Green'}/>
         </div>
         <div>
           <ColorToggleButton colorLabel={'Blue'}/>
