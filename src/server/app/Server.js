@@ -37,7 +37,10 @@ export default class Server {
       console.log('Toggling Color', req.body.color)
       let led = colorLedGpios[req.body.color]
       led.toggle()
-      res.send({"colorOn": (led.isLedOn())})
+      res.send({
+        "color": req.body.color,
+        "status": led.isLedOn()
+      })
     })
 
     app.get('*', function response(req, res) {

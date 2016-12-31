@@ -5,9 +5,7 @@ import {Toggle} from 'material-ui'
 export default class ColorToggle extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      colorOn: props.initialLedStatus
-    }
+    this.state = this.props.status
     this.toggleLight = this.toggleLight.bind(this)
   }
 
@@ -39,7 +37,7 @@ export default class ColorToggle extends React.Component {
     return (
       <div style={{display: 'inline-block'}}>
         <Toggle
-          defaultToggled={this.props.initialLedStatus}
+          defaultToggled={this.props.status.status}
           label={this.props.colorLabel}
           thumbStyle={styles.thumbOff}
           trackStyle={styles.trackOff}
@@ -52,9 +50,7 @@ export default class ColorToggle extends React.Component {
   }
 
   toggleLight() {
-    let endpoint = `${this.props.endpoint}/toggle`
-
-    fetch(endpoint, {
+    fetch(`${this.props.endpoint}/toggle`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -70,15 +66,7 @@ export default class ColorToggle extends React.Component {
         throw new Error('Error in response')
       })
       .then((data) => {
-        if (data.colorOn) {
-          this.setState({
-            colorOn: true
-          })
-        } else {
-          this.setState({
-            colorOn: false
-          })
-        }
+        this.props.onToggle(data)
       })
       .catch((error) => {
         console.log(error)
@@ -89,6 +77,7 @@ export default class ColorToggle extends React.Component {
 
 ColorToggle.propTypes = {
   colorLabel: React.PropTypes.string.isRequired,
-  initialLedStatus: React.PropTypes.bool.isRequired,
-  endpoint: React.PropTypes.string.isRequired
+  status: React.PropTypes.object.isRequired,
+  endpoint: React.PropTypes.string.isRequired,
+  onToggle: React.PropTypes.any
 }

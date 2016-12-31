@@ -7,7 +7,9 @@ export default class ColorToggleGroup extends React.Component {
     this.state = {
       statuses: []
     }
+    this.handleToggle = this.handleToggle.bind(this)
   }
+
   componentDidMount() {
     let endpoint = `${this.props.endpoint}/statuses`
 
@@ -23,6 +25,12 @@ export default class ColorToggleGroup extends React.Component {
       })
   }
 
+  handleToggle(newStatus) {
+    const newStatuses = this.state.statuses.map(status => {
+      return (status.color === newStatus.color) ? newStatus : status
+    });
+    this.setState(newStatuses)
+  }
 
   render() {
     var buttons = this.state.statuses.map( led => {
@@ -30,8 +38,9 @@ export default class ColorToggleGroup extends React.Component {
           <ColorToggleButton
             key={led.color}
             colorLabel={led.color}
-            initialLedStatus={led.status}
+            status={led}
             endpoint={this.props.endpoint}
+            onToggle={this.handleToggle}
           />
         )
       } )
