@@ -52,8 +52,7 @@ export default class ColorToggle extends React.Component {
   }
 
   toggleLight() {
-    let endpoint = 'http://raspberrypi.local:8080/toggle'
-    // let endpoint = `http://localhost:8080/toggle`
+    let endpoint = `${this.props.endpoint}/toggle`
 
     fetch(endpoint, {
       method: 'POST',
@@ -90,5 +89,6 @@ export default class ColorToggle extends React.Component {
 
 ColorToggle.propTypes = {
   colorLabel: React.PropTypes.string.isRequired,
-  initialLedStatus: React.PropTypes.bool.isRequired
+  initialLedStatus: React.PropTypes.bool.isRequired,
+  endpoint: React.PropTypes.string.isRequired
 }

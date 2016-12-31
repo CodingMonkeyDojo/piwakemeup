@@ -9,8 +9,7 @@ export default class ColorToggleGroup extends React.Component {
     }
   }
   componentDidMount() {
-    let endpoint = 'http://raspberrypi.local:8080/statuses'
-    // let endpoint = `http://localhost:8080/statuses`
+    let endpoint = `${this.props.endpoint}/statuses`
 
     fetch(endpoint)
       .then(response => {
@@ -28,7 +27,12 @@ export default class ColorToggleGroup extends React.Component {
   render() {
     var buttons = this.state.statuses.map( led => {
       return (
-          <ColorToggleButton key={led.color} colorLabel={led.color} initialLedStatus={led.status} />
+          <ColorToggleButton
+            key={led.color}
+            colorLabel={led.color}
+            initialLedStatus={led.status}
+            endpoint={this.props.endpoint}
+          />
         )
       } )
     return (
@@ -37,4 +41,8 @@ export default class ColorToggleGroup extends React.Component {
       </div>
     )
   }
+}
+
+ColorToggleGroup.propTypes = {
+  endpoint: React.PropTypes.string.isRequired
 }
