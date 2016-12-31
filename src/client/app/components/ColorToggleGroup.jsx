@@ -35,6 +35,7 @@ export default class ColorToggleGroup extends React.Component {
   render() {
     var buttons = this.state.statuses.map( led => {
       return (
+        <div style={{'padding': '10px'}}>
           <ColorToggleButton
             key={led.color}
             colorLabel={led.color}
@@ -42,10 +43,11 @@ export default class ColorToggleGroup extends React.Component {
             endpoint={this.props.endpoint}
             onToggle={this.handleToggle}
           />
+        </div>
         )
       } )
     return (
-      <div>
+      <div style={{display: 'inline'}}>
         {buttons}
       </div>
     )

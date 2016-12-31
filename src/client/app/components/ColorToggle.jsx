@@ -30,12 +30,13 @@ export default class ColorToggle extends React.Component {
       //   backgroundColor: '#ff9d9d',
       // },
       labelStyle: {
-        color: this.props.colorLabel.toLowerCase()
+        color: this.props.colorLabel.toLowerCase(),
+        fontSize: '5.0em'
       },
     }
 
     return (
-      <div style={{display: 'inline-block'}}>
+      <div style={{display: 'inline-block', height: '150px'}}>
         <Toggle
           defaultToggled={this.props.status.status}
           label={this.props.colorLabel}
