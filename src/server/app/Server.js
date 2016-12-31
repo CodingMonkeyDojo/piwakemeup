@@ -15,7 +15,7 @@ export default class Server {
     }
 
     let app = express()
-    app.use(express.static(path.join(__dirname, 'src/client/public')))
+    app.use(express.static(path.resolve(__dirname) + '/../../client/public'))
     app.use(bodyParser.json())
     app.use((req, res, next) => {
       res.header("Access-Control-Allow-Origin", "*")
@@ -44,7 +44,7 @@ export default class Server {
     })
 
     app.get('*', function response(req, res) {
-      res.sendFile(path.join(__dirname, 'src/client/public/index.html'))
+      res.sendFile(path.resolve(__dirname) + '/../../client/public/index.html')
     })
 
     const PORT = 8080;
