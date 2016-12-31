@@ -44,7 +44,7 @@ export default class Server {
     })
 
     app.get('*', function response(req, res) {
-      res.sendFile(path.resolve(__dirname) + '/../../client/public/index.html')
+      res.sendFile(path.resolve(__dirname + '/../../client/public/index.html'))
     })
 
     const PORT = 8080;

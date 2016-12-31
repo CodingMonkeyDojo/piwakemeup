@@ -10,8 +10,8 @@ export default class Application extends React.Component {
     super(props)
   }
   render() {
-    // let endpoint = 'http://raspberrypi.local:8080'
-    let endpoint = 'http://localhost:8080'
+    let endpoint = 'http://raspberrypi.local:8080'
+    // let endpoint = 'http://localhost:8080'
 
     return (
       <MuiThemeProvider>
