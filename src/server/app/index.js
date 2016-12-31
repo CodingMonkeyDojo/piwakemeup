@@ -4,78 +4,74 @@ import bodyParser from 'body-parser'
 
 import {Gpio} from 'pigpio'
 
-let app = express();
+let app = express()
 
-app.use(express.static(path.join(__dirname, 'src/client/public')));
-app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'src/client/public')))
+app.use(bodyParser.json())
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
 
-const ledsOnOff = {
-  "red": {
-    "pin": 17,
-    "gpio": createGpio(17)
-  },
-  "green": {
-    "pin": 18,
-    "gpio": createGpio(18)
-  },
-  "blue": {
-    "pin": 27,
-    "gpio": createGpio(27)
+class GpioLed {
+  constructor(pinNumber) {
+    this.gpio = new Gpio(pinNumber, {mode: Gpio.OUTPUT})
   }
-};
 
-function toggle(color) {
-  let led = ledsOnOff[color.toLowerCase()];
-  let wasOn = led.gpio.getPwmDutyCycle() == 0;
+  isLedOn() {
+    return this.gpio.getPwmDutyCycle() === 0
+  }
 
-  led.gpio.pwmWrite(wasOn ? 255 : 0);
+  toggle() {
+    this.isLedOn() ? this.switchOff() : this.switchOn()
+  }
 
-  return {"colorOn": (ledsOnOff[color.toLowerCase()].gpio.getPwmDutyCycle() == 0)};
+  switchOn() {
+    this.gpio.pwmWrite(0)
+  }
+
+  switchOff() {
+    this.gpio.pwmWrite(255)
+  }
 }
 
-app.post('/toggle', function(req, res) {
-  toggle(req.body.color)
-  console.log('Toggling Color', req.body.color);
-  let led = ledsOnOff[req.body.color];
-  res.send({"colorOn": (led.gpio.getPwmDutyCycle() == 0)});
-});
+const colorLedGpios = {
+  "red": new GpioLed(17),
+  "green": new GpioLed(18),
+  "blue": new GpioLed(27)
+}
 
 app.get('/statuses', function(req, res) {
-  let statuses = Object.keys(ledsOnOff).map((key, index) => {
+  let statuses = Object.keys(colorLedGpios).map((key, index) => {
     return {
       "color": key,
-      "status": (ledsOnOff[key].gpio.getPwmDutyCycle() == 0)
+      "status": (colorLedGpios[key].isLedOn())
     }
   })
   res.send(statuses)
-});
+})
+
+app.post('/toggle', function(req, res) {
+  console.log('Toggling Color', req.body.color)
+  let led = colorLedGpios[req.body.color]
+  led.toggle()
+  res.send({"colorOn": (led.isLedOn())})
+})
 
 app.get('*', function response(req, res) {
-  res.sendFile(path.join(__dirname, 'src/client/public/index.html'));
-});
+  res.sendFile(path.join(__dirname, 'src/client/public/index.html'))
+})
 
-app.listen(8080, function () {
-  console.log('Node Express Webserver Started');
+const PORT = 8080;
+app.listen(PORT, function () {
+  console.log(`Node Express Webserver Started on port ${PORT}`)
   initializeLeds();
-});
+})
 
 function initializeLeds() {
-  Object.keys(ledsOnOff).map((color) => {
-    console.log('turnning off led', color);
-    ledsOnOff[color].gpio.pwmWrite(255);
+  Object.keys(colorLedGpios).map((color) => {
+    console.log('turning off led', color)
+    colorLedGpios[color].switchOff()
   })
 }
-
-function createGpio(pin) {
-  console.log('creating gpio for pin', pin);
-  return new Gpio(pin, {mode: Gpio.OUTPUT});
-}
-
-[1,2,3].map(item => {
-  return item * item
-})
