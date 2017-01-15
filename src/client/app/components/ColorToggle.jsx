@@ -38,7 +38,7 @@ export default class ColorToggle extends React.Component {
     return (
       <div style={{display: 'inline-block', height: '150px'}}>
         <Toggle
-          defaultToggled={this.props.status.status}
+          defaultToggled={this.props.initialStatus}
           label={this.props.colorLabel}
           thumbStyle={styles.thumbOff}
           trackStyle={styles.trackOff}
@@ -54,7 +54,6 @@ export default class ColorToggle extends React.Component {
     this.props.endPointService
       .post( '/toggle', { color: this.props.colorLabel } )
       .then((data) => {
-        console.log('received data', data)
         this.props.onToggle(data)
       })
   }
@@ -63,7 +62,7 @@ export default class ColorToggle extends React.Component {
 
 ColorToggle.propTypes = {
   colorLabel: React.PropTypes.string.isRequired,
-  status: React.PropTypes.object.isRequired,
+  initialStatus: React.PropTypes.bool.isRequired,
   endPointService: React.PropTypes.object.isRequired,
   onToggle: React.PropTypes.any
 }

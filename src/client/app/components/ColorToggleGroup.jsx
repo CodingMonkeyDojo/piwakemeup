@@ -40,7 +40,7 @@ export default class ColorToggleGroup extends React.Component {
           <ColorToggleButton
             key={led.color}
             colorLabel={led.color}
-            status={led}
+            initialStatus={led.status}
             endPointService={new EndPointService(this.props.endpoint)}
             onToggle={this.handleToggle}
           />

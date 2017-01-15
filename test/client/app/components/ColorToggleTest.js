@@ -9,9 +9,9 @@ import ColorToggle from '../../../../src/client/app/components/ColorToggle.jsx'
 
 describe('<ColorToggle />', ()=>{
 
-  it('renders <Toggle> button', ()=>{
+  it('toggle should post and notify updated status from server', ()=>{
 
-    const initialToggleStatus = {status: false}
+    const initialToggleStatus = false
 
     const newToggleStatus = { status: true }
 
@@ -29,7 +29,7 @@ describe('<ColorToggle />', ()=>{
     let colorToggle = shallow(
       <ColorToggle
         colorLabel="Red"
-        status={initialToggleStatus}
+        initialStatus={initialToggleStatus}
         onToggle={toggleHandler}
         endPointService={endPointService}
       />)
