@@ -17,7 +17,6 @@
     "express": "^4.14.0",
     "material-ui": "^0.16.6",
     "mocha": "^3.2.0",
-    "react-dom": "^15.4.2",
     "react-tap-event-plugin": "^2.0.1",
     "sinon": "^1.17.7",
     "whatwg-fetch": "^2.0.1"
@@ -32,6 +31,8 @@
     "json-loader": "^0.5.4",
     "mocha": "^3.10.9",
     "react": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.4.2",
     "sinon": "^3.10.8",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",
