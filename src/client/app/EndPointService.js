@@ -22,7 +22,19 @@ export default class EndPointService {
       .catch((error) => {
         console.log(error)
       })
+  }
 
+  get(resource) {
+    return fetch(`${this.host}${resource}`)
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        }
+        throw new Error(`Problem getting statuses from ${this.host}${resource}`)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
 }

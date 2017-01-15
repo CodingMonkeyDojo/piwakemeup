@@ -1,6 +1,5 @@
 import React from 'react'
 import ColorToggleButton from './ColorToggle.jsx'
-import EndPointService from '../EndPointService'
 
 export default class ColorToggleGroup extends React.Component {
   constructor(props) {
@@ -8,29 +7,35 @@ export default class ColorToggleGroup extends React.Component {
     this.state = {
       statuses: []
     }
-    this.handleToggle = this.handleToggle.bind(this)
+    this.updateStatuses = this.updateStatuses.bind(this)
+    this.toggleLight = this.toggleLight.bind(this)
+    this.initializeStatuses = this.initializeStatuses.bind(this)
   }
 
   componentDidMount() {
-    let endpoint = `${this.props.endpoint}/statuses`
+    this.initializeStatuses();
+  }
 
-    fetch(endpoint)
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        }
-        throw new Error(`Problem getting statuses from ${endpoint}`)
-      })
+  initializeStatuses() {
+    this.props.endPointService.get('/statuses')
       .then(data => {
         this.setState({statuses: data})
       })
   }
 
-  handleToggle(newStatus) {
+  toggleLight(color) {
+    this.props.endPointService
+      .post( '/toggle', { color: color } )
+      .then((data) => {
+        this.updateStatuses(data)
+      })
+  }
+
+  updateStatuses(newStatus) {
     const newStatuses = this.state.statuses.map(status => {
       return (status.color === newStatus.color) ? newStatus : status
     });
-    this.setState(newStatuses)
+    this.setState({statuses: newStatuses})
   }
 
   render() {
@@ -41,8 +46,7 @@ export default class ColorToggleGroup extends React.Component {
             key={led.color}
             colorLabel={led.color}
             initialStatus={led.status}
-            endPointService={new EndPointService(this.props.endpoint)}
-            onToggle={this.handleToggle}
+            onToggle={this.toggleLight}
           />
         </div>
         )
@@ -56,5 +60,5 @@ export default class ColorToggleGroup extends React.Component {
 }
 
 ColorToggleGroup.propTypes = {
-  endpoint: React.PropTypes.string.isRequired
+  endPointService: React.PropTypes.object.isRequired
 }

@@ -6,7 +6,11 @@ export default class ColorToggle extends React.Component {
 
   constructor(props) {
     super(props)
-    this.toggleLight = this.toggleLight.bind(this)
+    this.onToggle = this.onToggle.bind(this)
+  }
+
+  onToggle() {
+    this.props.onToggle(this.props.colorLabel)
   }
 
   render() {
@@ -45,17 +49,9 @@ export default class ColorToggle extends React.Component {
           thumbSwitchedStyle={styles.thumbSwitched}
           trackSwitchedStyle={styles.trackSwitched}
           labelStyle={styles.labelStyle}
-          onToggle={this.toggleLight} />
+          onToggle={this.onToggle} />
       </div>
     )
-  }
-
-  toggleLight() {
-    this.props.endPointService
-      .post( '/toggle', { color: this.props.colorLabel } )
-      .then((data) => {
-        this.props.onToggle(data)
-      })
   }
 
 }
@@ -63,6 +59,5 @@ export default class ColorToggle extends React.Component {
 ColorToggle.propTypes = {
   colorLabel: React.PropTypes.string.isRequired,
   initialStatus: React.PropTypes.bool.isRequired,
-  endPointService: React.PropTypes.object.isRequired,
   onToggle: React.PropTypes.any
 }
