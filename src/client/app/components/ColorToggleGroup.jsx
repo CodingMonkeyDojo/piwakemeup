@@ -1,5 +1,6 @@
 import React from 'react'
 import ColorToggleButton from './ColorToggle.jsx'
+import EndPointService from '../EndPointService'
 
 export default class ColorToggleGroup extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ export default class ColorToggleGroup extends React.Component {
             key={led.color}
             colorLabel={led.color}
             status={led}
-            endpoint={this.props.endpoint}
+            endPointService={new EndPointService(this.props.endpoint)}
             onToggle={this.handleToggle}
           />
         </div>

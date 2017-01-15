@@ -3,9 +3,9 @@ import 'whatwg-fetch'
 import {Toggle} from 'material-ui'
 
 export default class ColorToggle extends React.Component {
+
   constructor(props) {
     super(props)
-    this.state = this.props.status
     this.toggleLight = this.toggleLight.bind(this)
   }
 
@@ -51,26 +51,11 @@ export default class ColorToggle extends React.Component {
   }
 
   toggleLight() {
-    fetch(`${this.props.endpoint}/toggle`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        color: this.props.colorLabel
-      })
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json()
-        }
-        throw new Error('Error in response')
-      })
+    this.props.endPointService
+      .post( '/toggle', { color: this.props.colorLabel } )
       .then((data) => {
+        console.log('received data', data)
         this.props.onToggle(data)
-      })
-      .catch((error) => {
-        console.log(error)
       })
   }
 
@@ -79,6 +64,6 @@ export default class ColorToggle extends React.Component {
 ColorToggle.propTypes = {
   colorLabel: React.PropTypes.string.isRequired,
   status: React.PropTypes.object.isRequired,
-  endpoint: React.PropTypes.string.isRequired,
+  endPointService: React.PropTypes.object.isRequired,
   onToggle: React.PropTypes.any
 }
