@@ -4,12 +4,18 @@ import 'whatwg-fetch'
 
 import AppBar from 'material-ui/AppBar'
 import ColorToggleGroup from './components/ColorToggleGroup.jsx'
-import EndPointService from './EndPointService'
+import EndpointService from './EndpointService'
 
 const ENDPOINT = 'http://raspberrypi.local:8080'
 // let ENDPOINT = 'http://localhost:8080'
 
 export default class LedApplication extends React.Component {
+  static get defaultProps() {
+    return {
+      endpointService: new EndpointService(ENDPOINT)
+    }
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -18,12 +24,6 @@ export default class LedApplication extends React.Component {
     this.updateStatuses = this.updateStatuses.bind(this)
     this.initializeStatuses = this.initializeStatuses.bind(this)
     this.toggleLight = this.toggleLight.bind(this)
-  }
-
-  getDefaultProps() {
-    return {
-      endpointService: new EndPointService(ENDPOINT)
-    }
   }
 
   componentDidMount() {
@@ -57,7 +57,7 @@ export default class LedApplication extends React.Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div style={{'text-align': 'center'}}>
+        <div style={{'textAlign': 'center'}}>
           <AppBar title="LIGHTER"  />
           <div style={{display: 'inline-block', 'padding': '30px'}}>
             <ColorToggleGroup

@@ -6,7 +6,7 @@ import React from 'react'
 import 'jsdom-global/register'
 
 import LedApplication from '../../../src/client/app/LedApplication.jsx'
-import EndpointService from '../../../src/client/app/EndPointService'
+import EndpointService from '../../../src/client/app/EndpointService'
 
 describe('LedApplication', () => {
   const INITIAL_STATUSES =

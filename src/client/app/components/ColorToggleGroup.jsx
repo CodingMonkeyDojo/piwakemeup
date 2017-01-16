@@ -7,9 +7,9 @@ export default class ColorToggleGroup extends React.Component {
   }
 
   render() {
-    var buttons = this.props.statuses.map( led => {
+    let buttons = this.props.statuses.map( led => {
       return (
-        <div style={{'padding': '10px'}}>
+        <div style={{'padding': '10px'}} key={led.color}>
           <ColorToggleButton
             key={led.color}
             colorLabel={led.color}
@@ -28,6 +28,6 @@ export default class ColorToggleGroup extends React.Component {
 }
 
 ColorToggleGroup.propTypes = {
-  statuses: React.PropTypes.object.isRequired,
-  onStatusUpdate: React.PropTypes.object.isRequired
+  statuses: React.PropTypes.array.isRequired,
+  onStatusUpdate: React.PropTypes.func.isRequired
 }
