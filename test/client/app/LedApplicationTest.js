@@ -48,14 +48,13 @@ describe('LedApplication', () => {
   })
 
   it('toggle should post and update statuses from server values', ()=>{
-    sinon.stub(endpointService, 'get', () => {
+    let endpointServiceStub = sinon.stub(endpointService, 'get', () => {
       return {
         then(resolved) {
           resolved(INITIAL_STATUSES)
         }
       }
     })
-
 
     endPointServiceMock
       .expects('post')
@@ -83,5 +82,28 @@ describe('LedApplication', () => {
     )
 
     endPointServiceMock.verify()
+    endpointServiceStub.restore()
+  })
+
+  it('updates status for a specific color', () => {
+    let endpointServiceStub = sinon.stub(endpointService, 'get', () => {
+      return {
+        then(resolved) {
+          resolved([{"color": "summer", "status": true}])
+        }
+      }
+    })
+
+    let ledApplication = shallow(<LedApplication endpointService={endpointService}/>).instance()
+
+    ledApplication.initializeStatuses()
+
+    expect(ledApplication.state.statuses).to.be.eqls([{"color": "summer", "status": true}])
+
+    ledApplication.updateStatuses({"color": "summer", "status": false})
+
+    expect(ledApplication.state.statuses).to.be.eqls([{"color": "summer", "status": false}])
+
+    endpointServiceStub.restore()
   })
 })
