@@ -20,4 +20,12 @@ export default class MockGpioLed {
   switchOff() {
     this.gpio.pwmDutyCycle = 255
   }
+
+  setDutyCycle(dutyCycle) {
+    this.gpio.pwmDutyCycle = dutyCycle
+  }
+
+  getDutyCycle() {
+    return this.gpio.pwmDutyCycle
+  }
 }

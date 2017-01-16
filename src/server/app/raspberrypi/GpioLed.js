@@ -20,4 +20,13 @@ export default class GpioLed {
   switchOff() {
     this.gpio.pwmWrite(255)
   }
+
+  setDutyCycle(dutyCycle) {
+    this.gpio.pwmWrite(dutyCycle)
+  }
+
+  getDutyCycle() {
+    return this.gpio.getPwmDutyCycle()
+  }
+
 }

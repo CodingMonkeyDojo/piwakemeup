@@ -6,8 +6,8 @@ import AppBar from 'material-ui/AppBar'
 import ColorToggleGroup from './components/ColorToggleGroup.jsx'
 import EndpointService from './EndpointService'
 
-const ENDPOINT = 'http://raspberrypi.local:8080'
-// let ENDPOINT = 'http://localhost:8080'
+// const ENDPOINT = 'http://raspberrypi.local:8080'
+let ENDPOINT = 'http://localhost:8080'
 
 export default class LedApplication extends React.Component {
   static get defaultProps() {

@@ -1,5 +1,7 @@
 import path from 'path'
+import util from 'util'
 import express from 'express'
+import expressValidator from 'express-validator'
 import bodyParser from 'body-parser'
 
 export default class Server {
@@ -17,6 +19,16 @@ export default class Server {
     let app = express()
     app.use(express.static(path.resolve(__dirname) + '/../../client/public'))
     app.use(bodyParser.json())
+    app.use(expressValidator({
+      customValidators: {
+        lte(param, num) {
+          return param <= num
+        },
+        gte(param, num) {
+          return param >= num
+        }
+      }
+    }))
     app.use((req, res, next) => {
       res.header("Access-Control-Allow-Origin", "*")
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
@@ -27,7 +39,8 @@ export default class Server {
       let statuses = Object.keys(colorLedGpios).map((key, index) => {
         return {
           "color": key,
-          "status": (colorLedGpios[key].isLedOn())
+          "status": (colorLedGpios[key].isLedOn()),
+          "powerLevel": colorLedGpios[key].getDutyCycle()
         }
       })
       res.send(statuses)
@@ -39,9 +52,34 @@ export default class Server {
       led.toggle()
       res.send({
         "color": req.body.color,
-        "status": led.isLedOn()
+        "status": led.isLedOn(),
+        "powerLevel": led.getDutyCycle()
       })
     })
+
+    app.post('/powerLevel', function(req, res) {
+      console.log('Setting power level for color:', req.body.color)
+
+      req.checkBody('color', 'Invalid color').notEmpty().isAlpha()
+      req.checkBody('powerLevel', 'Invalid power level').notEmpty().isInt().gte(0).lte(255)
+
+      req.sanitizeBody('powerLevel').toInt()
+
+      req.getValidationResult().then((result) => {
+        if (!result.isEmpty()) {
+          res.send('There have been validation errors: ' + util.inspect(result.array()), 400)
+          return
+        }
+        let led = colorLedGpios[req.body.color]
+        led.setDutyCycle(req.body.powerLevel)
+        res.send({
+          "color": req.body.color,
+          "status": led.isLedOn(),
+          "powerLevel": led.getDutyCycle()
+        })
+      })
+    })
+
 
     app.get('*', function response(req, res) {
       res.sendFile(path.resolve(__dirname + '/../../client/public/index.html'))
