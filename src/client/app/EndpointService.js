@@ -1,6 +1,6 @@
 import 'whatwg-fetch'
 
-export default class EndPointService {
+export default class EndpointService {
   constructor(host) {
     this.host = host
   }
