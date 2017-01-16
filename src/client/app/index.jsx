@@ -1,5 +1,9 @@
 import React from 'react'
 import {render} from 'react-dom'
-import Application from './Application.jsx'
+import LedApplication from './LedApplication.jsx'
+import EndpointService from './EndPointService'
 
-render(<Application />, document.getElementById('app'))
+const ENDPOINT = 'http://raspberrypi.local:8080'
+// let ENDPOINT = 'http://localhost:8080'
+
+render(<LedApplication endpointService={new EndpointService(ENDPOINT)} />, document.getElementById('app'))
