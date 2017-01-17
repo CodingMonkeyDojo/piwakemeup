@@ -4,6 +4,7 @@ import 'whatwg-fetch'
 
 import AppBar from 'material-ui/AppBar'
 import ColorToggleGroup from './components/ColorToggleGroup.jsx'
+import ColorSliderGroup from './components/ColorSliderGroup.jsx'
 import EndpointService from './EndpointService'
 
 // const ENDPOINT = 'http://raspberrypi.local:8080'
@@ -24,6 +25,7 @@ export default class LedApplication extends React.Component {
     this.updateStatuses = this.updateStatuses.bind(this)
     this.initializeStatuses = this.initializeStatuses.bind(this)
     this.toggleLight = this.toggleLight.bind(this)
+    this.changePowerLevel = this.changePowerLevel.bind(this)
   }
 
   componentDidMount() {
@@ -53,6 +55,14 @@ export default class LedApplication extends React.Component {
       })
   }
 
+  changePowerLevel(color, newPowerLevel) {
+    this.props.endpointService
+      .post( '/powerLevel', { color: color, powerLevel: Math.floor(newPowerLevel) } )
+      .then((data) => {
+        this.updateStatuses(data)
+      })
+  }
+
 
   render() {
     return (
@@ -63,6 +73,12 @@ export default class LedApplication extends React.Component {
             <ColorToggleGroup
               statuses={this.state.statuses}
               onStatusUpdate={this.toggleLight}
+            />
+          </div>
+          <div>
+            <ColorSliderGroup
+              statuses={this.state.statuses}
+              onStatusUpdate={this.changePowerLevel}
             />
           </div>
         </div>

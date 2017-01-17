@@ -59,6 +59,7 @@ export default class Server {
 
     app.post('/powerLevel', function(req, res) {
       console.log('Setting power level for color:', req.body.color)
+      console.log('Setting power level for powerLevel:', req.body.powerLevel)
 
       req.checkBody('color', 'Invalid color').notEmpty().isAlpha()
       req.checkBody('powerLevel', 'Invalid power level').notEmpty().isInt().gte(0).lte(255)
