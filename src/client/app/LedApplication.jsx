@@ -1,14 +1,12 @@
 import React from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import 'whatwg-fetch'
 
-import AppBar from 'material-ui/AppBar'
 import ColorToggleGroup from './components/ColorToggleGroup.jsx'
 import ColorSliderGroup from './components/ColorSliderGroup.jsx'
 import EndpointService from './EndpointService'
 
-// const ENDPOINT = 'http://raspberrypi.local:8080'
-let ENDPOINT = 'http://localhost:8080'
+const ENDPOINT = 'http://raspberrypi.local:8080'
+// let ENDPOINT = 'http://localhost:8080'
 
 export default class LedApplication extends React.Component {
   static get defaultProps() {
@@ -66,23 +64,20 @@ export default class LedApplication extends React.Component {
 
   render() {
     return (
-      <MuiThemeProvider>
-        <div style={{'textAlign': 'center'}}>
-          <AppBar title="LIGHTER"  />
-          <div style={{display: 'inline-block', 'padding': '30px'}}>
-            <ColorToggleGroup
-              statuses={this.state.statuses}
-              onStatusUpdate={this.toggleLight}
-            />
-          </div>
-          <div>
-            <ColorSliderGroup
-              statuses={this.state.statuses}
-              onStatusUpdate={this.changePowerLevel}
-            />
-          </div>
+      <div style={{'textAlign': 'center'}}>
+        <div style={{display: 'inline-block', 'padding': '30px'}}>
+          <ColorToggleGroup
+            statuses={this.state.statuses}
+            onStatusUpdate={this.toggleLight}
+          />
         </div>
-      </MuiThemeProvider>
+        <div>
+          <ColorSliderGroup
+            statuses={this.state.statuses}
+            onStatusUpdate={this.changePowerLevel}
+          />
+        </div>
+      </div>
     )
   }
 }
