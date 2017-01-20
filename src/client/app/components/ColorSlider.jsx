@@ -1,5 +1,5 @@
 import React from 'react'
-import Slider from 'material-ui/Slider'
+import ReactBootstrapSlider from 'react-bootstrap-slider'
 
 export default class ColorSlider extends React.Component {
   constructor(props) {
@@ -17,6 +17,17 @@ export default class ColorSlider extends React.Component {
 
   render() {
     return (
+      <div style={{height: '50px'}}>
+        <ReactBootstrapSlider
+          value={this.brightness}
+          slideStop={this.valueChanged}
+          max={255}
+          min={0}
+          orientation="horizontal" />
+      </div>
+    )
+/*
+    return (
       <Slider
         min={0}
         max={255}
@@ -24,10 +35,11 @@ export default class ColorSlider extends React.Component {
         value={this.brightness}
         onChange={this.valueChanged} />
     )
+*/
   }
 
-  valueChanged(event, newNumber) {
-    this.props.onChange(this.props.color, 255 - newNumber)
+  valueChanged(event) {
+    this.props.onChange(this.props.color, 255 - event.target.value)
   }
 }
 

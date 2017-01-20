@@ -4,7 +4,7 @@ import {expect} from 'chai'
 
 import ColorToggleGroup from '../../../../src/client/app/components/ColorToggleGroup'
 
-describe('<cColorToggleGroup/>', () => {
+describe('<ColorToggleGroup/>', () => {
 
   it('should render same number of <ColorToggle/> as statuses', () => {
 

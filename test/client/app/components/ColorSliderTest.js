@@ -12,7 +12,7 @@ describe('<ColorSlider />', () => {
 
     let colorSlider = shallow(<ColorSlider color={'red'} initialLevel={128} onChange={changeHandler} />).instance()
 
-    colorSlider.valueChanged({}, 123)
+    colorSlider.valueChanged({ target: { value: 123} } )
 
     assert(changeHandler.calledWith('red', 255 - 123))
 

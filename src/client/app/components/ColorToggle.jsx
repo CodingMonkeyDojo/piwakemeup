@@ -1,6 +1,6 @@
 import React from 'react'
 import 'whatwg-fetch'
-import {Toggle} from 'material-ui'
+import {Button} from 'react-bootstrap'
 
 export default class ColorToggle extends React.Component {
 
@@ -14,42 +14,23 @@ export default class ColorToggle extends React.Component {
   }
 
   render() {
-    const styles = {
-      block: {
-        maxWidth: 250,
-      },
-      toggle: {
-        marginBottom: 16,
-      },
-      // thumbOff: {
-      //   backgroundColor: '#ffcccc',
-      // },
-      // trackOff: {
-      //   backgroundColor: '#ff9d9d',
-      // },
-      // thumbSwitched: {
-      //   backgroundColor: this.props.colorLabel.toLowerCase()
-      // },
-      // trackSwitched: {
-      //   backgroundColor: '#ff9d9d',
-      // },
-      labelStyle: {
-        color: this.props.colorLabel.toLowerCase(),
-        fontSize: '5.0em'
-      },
+    const BS_STYLES = {
+      red: 'danger',
+      green: 'success',
+      blue: 'primary'
     }
+    const BUTTON_CONTAINER_STYLE = {width: '1000px', maxWidth: 400, margin: '0 auto 10px'}
 
     return (
-      <div style={{display: 'inline-block', height: '150px'}}>
-        <Toggle
-          defaultToggled={this.props.initialStatus}
-          label={this.props.colorLabel}
-          thumbStyle={styles.thumbOff}
-          trackStyle={styles.trackOff}
-          thumbSwitchedStyle={styles.thumbSwitched}
-          trackSwitchedStyle={styles.trackSwitched}
-          labelStyle={styles.labelStyle}
-          onToggle={this.onToggle} />
+      <div style={BUTTON_CONTAINER_STYLE}>
+        <Button
+          bsStyle={BS_STYLES[this.props.colorLabel]}
+          bsSize="large"
+          block={true}
+          active={this.props.initialStatus}
+          onClick={this.onToggle}>
+          {this.props.colorLabel}
+        </Button>
       </div>
     )
   }
