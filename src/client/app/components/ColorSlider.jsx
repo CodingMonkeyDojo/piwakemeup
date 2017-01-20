@@ -20,22 +20,12 @@ export default class ColorSlider extends React.Component {
       <div style={{height: '50px'}}>
         <ReactBootstrapSlider
           value={this.brightness}
-          slideStop={this.valueChanged}
-          max={255}
+          change={this.valueChanged}
           min={0}
+          max={255}
           orientation="horizontal" />
       </div>
     )
-/*
-    return (
-      <Slider
-        min={0}
-        max={255}
-        defaultValue={this.brightness}
-        value={this.brightness}
-        onChange={this.valueChanged} />
-    )
-*/
   }
 
   valueChanged(event) {
