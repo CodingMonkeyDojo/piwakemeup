@@ -1,12 +1,12 @@
 import React from 'react'
 import 'whatwg-fetch'
 
-import ColorToggleGroup from './components/ColorToggleGroup.jsx'
-import ColorSliderGroup from './components/ColorSliderGroup.jsx'
+import SingleColorControlGroup from './components/SingleColorControlGroup.jsx'
+
 import EndpointService from './EndpointService'
 
-// const ENDPOINT = 'http://raspberrypi.local:8080'
-let ENDPOINT = 'http://localhost:8080'
+const ENDPOINT = 'http://raspberrypi.local:8080'
+// let ENDPOINT = 'http://localhost:8080'
 
 export default class LedApplication extends React.Component {
   static get defaultProps() {
@@ -63,21 +63,25 @@ export default class LedApplication extends React.Component {
 
 
   render() {
-    return (
-      <div style={{'textAlign': 'center'}}>
-        <div style={{display: 'inline-block', 'padding': '30px'}}>
-          <ColorToggleGroup
-            statuses={this.state.statuses}
-            onStatusUpdate={this.toggleLight}
-          />
-        </div>
+    let controlGroups = this.state.statuses.map(led => {
+        return (
+            <div style={{textAlign: 'center'}}>
+              <div style={{display: 'inline-block'}}>
+                <SingleColorControlGroup
+                    key={led.color}
+                    color={led.color}
+                    toggleStatus={led.status}
+                    powerLevel={led.powerLevel}
+                    onToggle={this.toggleLight}
+                    onSlide={this.changePowerLevel}/>
+              </div>
+            </div>
+        )
+    })
+      return (
         <div>
-          <ColorSliderGroup
-            statuses={this.state.statuses}
-            onStatusUpdate={this.changePowerLevel}
-          />
+            {controlGroups}
         </div>
-      </div>
     )
   }
 }

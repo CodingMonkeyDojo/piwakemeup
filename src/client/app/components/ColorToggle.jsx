@@ -19,10 +19,9 @@ export default class ColorToggle extends React.Component {
       green: 'success',
       blue: 'primary'
     }
-    const BUTTON_CONTAINER_STYLE = {width: '1000px', maxWidth: 400, margin: '0 auto 10px'}
 
     return (
-      <div style={BUTTON_CONTAINER_STYLE}>
+      <div style={{width: '100px'}}>
         <Button
           bsStyle={BS_STYLES[this.props.colorLabel]}
           bsSize="large"

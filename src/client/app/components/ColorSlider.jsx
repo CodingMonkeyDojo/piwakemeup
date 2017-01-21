@@ -17,14 +17,12 @@ export default class ColorSlider extends React.Component {
 
   render() {
     return (
-      <div style={{height: '50px'}}>
-        <ReactBootstrapSlider
-          value={this.brightness}
-          change={this.valueChanged}
-          min={0}
-          max={255}
-          orientation="horizontal" />
-      </div>
+      <ReactBootstrapSlider
+        value={this.brightness}
+        change={this.valueChanged}
+        min={0}
+        max={255}
+        orientation="horizontal" />
     )
   }
 
