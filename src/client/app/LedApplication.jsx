@@ -66,7 +66,7 @@ export default class LedApplication extends React.Component {
     let controlGroups = this.state.statuses.map(led => {
         return (
             <div style={{textAlign: 'center'}}>
-              <div style={{display: 'inline-block'}}>
+              <div style={{verticalAlign: 'middle', display: 'inline-block'}}>
                 <SingleColorControlGroup
                     key={led.color}
                     color={led.color}
@@ -79,8 +79,10 @@ export default class LedApplication extends React.Component {
         )
     })
       return (
-        <div>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <div style={{position: 'absolute', top:'50%', transform:'translateY(-50%)'}}>
             {controlGroups}
+          </div>
         </div>
     )
   }
