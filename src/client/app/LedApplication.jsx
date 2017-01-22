@@ -65,10 +65,9 @@ export default class LedApplication extends React.Component {
   render() {
     let controlGroups = this.state.statuses.map(led => {
         return (
-            <div style={{textAlign: 'center'}}>
+            <div style={{textAlign: 'center'}} key={led.color}>
               <div style={{verticalAlign: 'middle', display: 'inline-block'}}>
                 <SingleColorControlGroup
-                    key={led.color}
                     color={led.color}
                     toggleStatus={led.status}
                     powerLevel={led.powerLevel}
