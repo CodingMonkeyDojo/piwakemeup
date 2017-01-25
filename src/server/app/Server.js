@@ -3,7 +3,9 @@ import util from 'util'
 import express from 'express'
 import expressValidator from 'express-validator'
 import bodyParser from 'body-parser'
+import routes from './routes'
 import modules from './routes/modules'
+import connections from './routes/connections'
 
 export default class Server {
   constructor(GpioLed) {
@@ -36,7 +38,7 @@ export default class Server {
       next()
     })
 
-      app.use('/modules', modules)
+      app.use('/', routes)
 
     app.get('/statuses', function(req, res) {
       let statuses = Object.keys(colorLedGpios).map((key, index) => {
@@ -85,10 +87,10 @@ export default class Server {
     })
 
 
-    app.get('*', function response(req, res) {
-      res.sendFile(path.resolve(__dirname + '/../../client/public/index.html'))
-    })
-
+    // app.get('*', function response(req, res) {
+    //   res.sendFile(path.resolve(__dirname + '/../../client/public/index.html'))
+    // })
+    //
     const PORT = 8080;
     app.listen(PORT, function () {
       console.log(`Node Express Webserver Started on port ${PORT}`)
