@@ -11,15 +11,18 @@
   "connectedGpios": [
     {
       "gpioPin": 17,
-      "modulePin": "red"
+      "modulePin": "red",
+      "color": "red"
     },
     {
       "gpioPin": 18,
-      "modulePin": "green"
+      "modulePin": "green",
+      "color": "green"
     },
     {
       "gpioPin": 27,
-      "modulePin": "blue"
+      "modulePin": "blue",
+      "color": "blue"
     }
   ]
 }

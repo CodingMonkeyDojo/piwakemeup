@@ -4,8 +4,6 @@ import express from 'express'
 import expressValidator from 'express-validator'
 import bodyParser from 'body-parser'
 import routes from './routes'
-import modules from './routes/modules'
-import connections from './routes/connections'
 
 export default class Server {
   constructor(GpioLed) {
@@ -38,7 +36,7 @@ export default class Server {
       next()
     })
 
-      app.use('/', routes)
+    app.use('/', routes)
 
     app.get('/statuses', function(req, res) {
       let statuses = Object.keys(colorLedGpios).map((key, index) => {
