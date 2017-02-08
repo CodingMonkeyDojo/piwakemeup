@@ -1,4 +1,5 @@
 export default class MockGpioLed {
+
   constructor(pinNumber) {
     this.gpio = {
       "pwmDutyCycle": 255

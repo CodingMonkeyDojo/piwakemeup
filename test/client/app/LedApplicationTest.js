@@ -8,7 +8,7 @@ import 'jsdom-global/register'
 import LedApplication from '../../../src/client/app/LedApplication.jsx'
 import EndpointService from '../../../src/client/app/EndpointService'
 
-describe('LedApplication', () => {
+describe('<LedApplication />', () => {
   const INITIAL_STATUSES =
     [
       { color: 'red', status: false},
@@ -18,7 +18,7 @@ describe('LedApplication', () => {
 
   const endpointService = new EndpointService()
 
-  var endPointServiceMock = null
+  let endPointServiceMock = null
 
   beforeEach(() => {
     endPointServiceMock = sinon.mock(endpointService)

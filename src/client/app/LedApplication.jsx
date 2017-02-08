@@ -5,7 +5,7 @@ import SingleColorControlGroup from './components/SingleColorControlGroup.jsx'
 
 import EndpointService from './EndpointService'
 
-const ENDPOINT = 'http://raspberrypi.local:8080'
+const ENDPOINT = 'http://192.168.2.123:8080'
 // let ENDPOINT = 'http://localhost:8080'
 
 export default class LedApplication extends React.Component {
